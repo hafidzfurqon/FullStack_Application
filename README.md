@@ -34,7 +34,9 @@ cd FullStack_Application
 
 ### 2. Create Environment Files
 
-follow the example in env.example
+follow the example in env.example for frontend
+
+for backend in .env.development 
 
 ### 3. Run the Project with Docker Compose
 
