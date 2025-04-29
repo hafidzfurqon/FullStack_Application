@@ -35,6 +35,8 @@ cd FullStack_Application
 ### 2. Create Environment Files
 
 follow the example in env.example for frontend
+i highly recommend you to pointing your env url backend to this url (http://localhost:3001) 
+once you set up with that youre good to go.
 
 for backend in .env.development 
 
