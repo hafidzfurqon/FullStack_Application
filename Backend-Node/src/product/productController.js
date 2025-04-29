@@ -41,8 +41,6 @@ const upload = multer({ storage: storage });
 
 // Route untuk membuat produk
 router.post("/", upload.single("image"), async (req, res) => {
-  console.log(req.body); // Log untuk melihat data form yang diterima
-  console.log(req.file); // Log untuk melihat file yang di-upload
 
   try {
     const { name, price, description } = req.body;
