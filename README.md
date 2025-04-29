@@ -40,7 +40,7 @@ for backend in .env.development
 
 ### 3. Run the Project with Docker Compose
 
-docker-compose up --build
+docker compose up --build
 
 This will:
 
