@@ -1,6 +1,8 @@
 const prisma = require("../db");
 
-const BASE_URL = `http://localhost:${process.env.PORT}/uploads`; // ganti sesuai domain produksi jika perlu
+const PORT = process.env.PORT || 3001;
+
+const BASE_URL = `http://localhost:${PORT}/uploads`; // ganti sesuai domain produksi jika perlu
 
 const getAllProductss = async () => {
   const products = await prisma.product.findMany();

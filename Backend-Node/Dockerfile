@@ -15,4 +15,7 @@ COPY . .
 
 RUN npx prisma generate
 
-CMD ["npm", "run", "start"]
+RUN mkdir -p src/product/uploads
+
+
+CMD ["sh", "-c", "npx prisma db push && npm run start"]

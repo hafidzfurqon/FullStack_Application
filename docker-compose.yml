@@ -23,9 +23,13 @@ services:
     ports:
       - "3001:3001"
     environment:
+      PORT: 3001
       DATABASE_URL: postgres://myuser:mypassword@postgres:5432/mydatabase
+      BASE_URL: http://localhost:3001/uploads
     depends_on:
       - postgres
+    volumes:
+      - ./Backend-Node/src/product/uploads:/app/src/product/uploads
 
   frontend:
     build:
