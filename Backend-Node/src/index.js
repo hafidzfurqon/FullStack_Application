@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "product", "uploads")));
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.redirect("/api-docs");

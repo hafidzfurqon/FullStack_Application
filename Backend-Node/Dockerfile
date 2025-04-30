@@ -13,9 +13,11 @@ RUN npm install
 
 COPY . .
 
+# Generate Prisma Client
 RUN npx prisma generate
 
+# Buat folder upload jika dibutuhkan
 RUN mkdir -p src/product/uploads
 
-
-CMD ["sh", "-c", "npx prisma db push && npm run start"]
+# Jalankan migrasi dan seeder sebelum start
+CMD ["sh", "-c", "npx prisma db push && npm run seed && npm run start"]
