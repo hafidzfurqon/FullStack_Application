@@ -7,7 +7,7 @@ async function main() {
       name: "Mechanical Keyboard",
       price: 15000,
       description: "This is an example keyboard product",
-      image: "/public/1745986620397-images.jpeg"
+      image: "/1745986620397-images.jpeg",
     },
   });
 }

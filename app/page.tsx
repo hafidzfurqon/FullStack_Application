@@ -172,7 +172,7 @@ export default function Home() {
         </div>
       ) : products.length === 0 ? (
         <div className="mt-3">
-          Nothing to show here. Try adding a product or change your keyword or
+          Nothing to show here. Try change your keyword or
           check your local env like BACKEND_URL_API.
         </div>
       ) : (
