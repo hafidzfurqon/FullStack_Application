@@ -6,6 +6,8 @@ const prisma = new PrismaClient();
 const ProductController = require("./product/productController");
 const cors = require("cors");
 const path = require("path");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 
 app.use(cors());
 
@@ -18,10 +20,14 @@ app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "product", "uploads")));
 
 app.get("/", (req, res) => {
-  res.send(
-    "Welcome to RestFull API WITH Express JS That Implementing Layered Architechture With Prisma Object Relational Model (ORM)"
-  );
+  res.redirect("/api-docs");
 });
+
+const swaggerDocument = YAML.load(
+  path.join(__dirname, "product", "swagger.yaml")
+);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/products", ProductController);
 

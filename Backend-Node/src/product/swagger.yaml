@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: Product API With Layered Architechture
+  description: RESTful API with Express.js, Prisma ORM, and Multer for upload file.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3001
+
+paths:
+  /:
+    get:
+      summary: Welcome endpoint
+      responses:
+        "200":
+          description: Welcome message
+
+  /products:
+    get:
+      summary: Mendapatkan semua produk
+      responses:
+        "200":
+          description: Daftar semua produk
+    post:
+      summary: Membuat produk baru
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+              required:
+                - name
+                - price
+                - description
+                - image
+      responses:
+        "201":
+          description: Produk berhasil dibuat
+
+  /products/{id}:
+    get:
+      summary: Mendapatkan produk berdasarkan ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Detail produk
+        "400":
+          description: Produk tidak ditemukan
+
+    delete:
+      summary: Menghapus produk berdasarkan ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Produk berhasil dihapus
+
+    put:
+      summary: Memperbarui produk secara penuh
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                existingImage:
+                  type: string
+              required:
+                - name
+                - price
+                - description
+      responses:
+        "200":
+          description: Produk berhasil diperbarui
+
+    patch:
+      summary: Memperbarui sebagian data produk
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: Produk berhasil diperbarui sebagian

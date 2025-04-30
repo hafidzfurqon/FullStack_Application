@@ -7,9 +7,8 @@ const {
   UpdatedProduct,
 } = require("./productRepository");
 
-const getAllProducts = async () => {
-  const product = getAllProductss();
-
+const getAllProducts = async ({ page, limit, search, sort }) => {
+  const product = await getAllProductss({ page, limit, search, sort });
   return product;
 };
 
@@ -47,11 +46,11 @@ const DeleteProductById = async (id) => {
   await DeleteProductFromId(parseInt(id));
 };
 
-const EditedProductById = async (id, ProdukData) => {
+const EditedProductById = async (id, ProductData) => {
   await getProductById(id);
-  const produk = await UpdatedProduct(id, ProdukData);
+  const product = await UpdatedProduct(id, ProductData);
 
-  return produk;
+  return product;
 };
 
 module.exports = {

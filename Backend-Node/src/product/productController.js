@@ -14,17 +14,30 @@ const router = express.Router();
 
 router.get("/:id", async (req, res) => {
   try {
-    const produkId = parseInt(req.params.id);
-    const produk = await getProductById(produkId);
-    res.send(produk);
+    const productId = parseInt(req.params.id);
+    const product = await getProductById(productId);
+    res.send(product);
   } catch (error) {
     res.status(400).send(error.message);
   }
 });
 
 router.get("/", async (req, res) => {
-  const product = await getAllProducts();
-  res.send(product);
+  const { page = 1, limit = 5, search = "", sort = "latest" } = req.query;
+
+  try {
+    const products = await getAllProducts({
+      page: Number(page),
+      limit: Number(limit),
+      search,
+      sort,
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 const storage = multer.diskStorage({
@@ -41,7 +54,6 @@ const upload = multer({ storage: storage });
 
 // Route untuk membuat produk
 router.post("/", upload.single("image"), async (req, res) => {
-
   try {
     const { name, price, description } = req.body;
     const image = req.file?.filename;
@@ -63,9 +75,9 @@ router.post("/", upload.single("image"), async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const produkId = req.params.id;
+    const productId = req.params.id;
 
-    await DeleteProductById(produkId);
+    await DeleteProductById(productId);
 
     res.send("deleted Products");
   } catch (error) {
@@ -75,7 +87,7 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", upload.single("image"), async (req, res) => {
   try {
-    const produkId = parseInt(req.params.id);
+    const productId = parseInt(req.params.id);
     const { name, price, description } = req.body;
     const image = req.file?.filename;
 
@@ -86,7 +98,7 @@ router.put("/:id", upload.single("image"), async (req, res) => {
     // jika ada file baru, pakai yang baru. Jika tidak, pakai yang lama (dari client)
     const finalImage = image || req.body.existingImage;
 
-    const updatedProduct = await EditedProductById(produkId, {
+    const updatedProduct = await EditedProductById(productId, {
       name,
       price: parseInt(price),
       description,
@@ -104,12 +116,12 @@ router.put("/:id", upload.single("image"), async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
   try {
-    const produkId = parseInt(req.params.id);
-    const ProdukData = req.body;
+    const productId = parseInt(req.params.id);
+    const productData = req.body;
 
-    const produk = await EditedProductById(produkId, ProdukData);
+    const product = await EditedProductById(productId, productData);
     res.send({
-      data: produk,
+      data: product,
       message: "edited Product",
     });
   } catch (error) {

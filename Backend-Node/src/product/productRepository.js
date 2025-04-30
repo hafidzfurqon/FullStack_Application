@@ -1,17 +1,45 @@
 const prisma = require("../db");
 
-const PORT = process.env.PORT || 3001;
+const BASE_URLS =
+  process.env.BASE_URL || `http://localhost:${process.env.PORT}/uploads`;
 
-const BASE_URL = `http://localhost:${PORT}/uploads`; // ganti sesuai domain produksi jika perlu
+const BASE_URL = BASE_URLS; // ganti sesuai domain produksi jika perlu
 
-const getAllProductss = async () => {
-  const products = await prisma.product.findMany();
+const getAllProductss = async ({
+  page = 1,
+  limit = 5,
+  search = "",
+  sort = "latest",
+}) => {
+  const skip = (page - 1) * limit;
+  const orderBy = sort === "oldest" ? "asc" : "desc";
+
+  // Pastikan search adalah string
+  const where = search
+    ? {
+        name: {
+          contains: String(search), // pastikan search menjadi string
+          mode: "insensitive",
+        },
+      }
+    : {};
+
+  const [products, total] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      orderBy: { id: orderBy },
+      skip,
+      take: limit,
+    }),
+    prisma.product.count({ where }),
+  ]);
+
   const productsWithImageUrl = products.map((p) => ({
     ...p,
     image: `${BASE_URL}/${p.image}`,
   }));
 
-  return productsWithImageUrl;
+  return { data: productsWithImageUrl, total, page, limit };
 };
 
 const findProductById = async (id) => {
@@ -50,17 +78,17 @@ const DeleteProductFromId = async (id) => {
   });
 };
 
-const UpdatedProduct = async (id, ProdukData) => {
+const UpdatedProduct = async (id, ProductData) => {
   const product = await prisma.product.update({
     where: {
       id: parseInt(id),
     },
 
     data: {
-      name: ProdukData.name,
-      price: ProdukData.price,
-      description: ProdukData.description,
-      image: ProdukData.image,
+      name: ProductData.name,
+      price: ProductData.price,
+      description: ProductData.description,
+      image: ProductData.image,
     },
   });
   return product;

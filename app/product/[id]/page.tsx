@@ -42,7 +42,10 @@ const ProductDetailPage = () => {
             Rp {product.price.toLocaleString("id-ID")}
           </p>
           <Separator />
-          <p className="text-muted-foreground">{product.description}</p>
+
+          <p className="max-w-md overflow-auto break-words">
+            {product.description}
+          </p>
           <Link href={"/"}>
             <Button className="cursor-pointer">Kembali</Button>
           </Link>
