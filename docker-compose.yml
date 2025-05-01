@@ -41,6 +41,8 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    environment:
+      NEXT_PUBLIC_HOST_API: http://backend_service:3001
 
 volumes:
   postgres_data:
