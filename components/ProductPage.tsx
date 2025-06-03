@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { ShoppingCartIcon } from "lucide-react";
 import { fCurrency } from "@/utils/format-number";
-import Image from "next/image";
 import { useFetchAllProducts } from "@/hooks/product";
 import { Skeleton } from "./ui/skeleton";
 import { ModeToggle } from "./mode-toggle";
@@ -21,10 +20,8 @@ import { useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { toast } from "sonner";
-import axios from "axios";
 import { apiCall } from "@/lib/auth";
-import { User } from "@/app/products/cart/page";
-// import { useRouter } from "next/navigation";
+import { User } from "@/types/user";
 
 export interface ProductData {
   id: any;
@@ -82,18 +79,23 @@ export function ProductPage() {
 
   const totalPages = Math.ceil((productResponse?.total || 1) / perPage);
 
-  const products = productResponse?.data || [];
+  // const products = productResponse?.data || [];
+  const products = useMemo(
+    () => productResponse?.data || [],
+    [productResponse]
+  );
 
   const sortedProducts = useMemo(() => {
-    return products?.sort((a: any, b: any) => {
+    const copiedProducts = [...products];
+    return copiedProducts.sort((a: any, b: any) => {
       if (sortBy === "low") return a.price - b.price;
       if (sortBy === "high") return b.price - a.price;
-      return 0; // default order
+      return 0;
     });
   }, [products, sortBy]);
 
-  // Apply search filter to current page products
   const filteredProducts = useMemo(() => {
+    if (!searchTerm) return sortedProducts;
     return sortedProducts.filter((product: ProductData) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -103,17 +105,17 @@ export function ProductPage() {
   const currentProducts = filteredProducts;
 
   const logout = async () => {
-    // Hapus cookie access_token
-    const response = apiCall.post("/logout");
-    document.cookie =
-      "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-    toast.success("Logout Successfully!");
-
-    // Redirect ke halaman login
-    router.push("/");
-    return response;
+    try {
+      await apiCall.post("/logout");
+      document.cookie =
+        "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      toast.success("Logout Successfully!");
+      router.push("/");
+    } catch (error) {
+      toast.error("Logout failed");
+    }
   };
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -236,7 +238,7 @@ export function ProductPage() {
             const count = cart[product.id] || 0;
             return (
               <div key={product.id} className="bg-card rounded-lg shadow-sm">
-                <Image
+                <img
                   src={product.image}
                   alt={product.name}
                   width={400}

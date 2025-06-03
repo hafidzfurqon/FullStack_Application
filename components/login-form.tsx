@@ -36,13 +36,13 @@ const DEMO_ACCOUNTS = [
   {
     role: "Admin",
     email: "admin@gmail.com",
-    password: "password",
+    password: "admin123456",
     description: "Full access to dashboard",
   },
   {
     role: "User",
-    email: "hpsgaming212@gmail.com",
-    password: "password",
+    email: "user@gmail.com",
+    password: "user123456",
     description: "Standard user access",
   },
 ];

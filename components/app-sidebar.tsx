@@ -13,7 +13,6 @@ import {
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { User } from "@/app/products/cart/page";
 
 // Menu items.
 const items = [

@@ -25,7 +25,6 @@ import { apiCall } from "@/lib/auth";
 import { ProductData } from "@/components/ProductPage";
 import { toast } from "sonner";
 import { useRouter } from "next/router";
-import { User } from "../products/cart/page";
 
 interface LayoutCard {
   children: React.ReactNode;

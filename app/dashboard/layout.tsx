@@ -17,22 +17,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiCall } from "@/lib/auth";
 import { toast } from "sonner";
-import { User } from "../products/cart/page";
+import { User } from "@/types/user";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [userAuthenticated, setUserAuthenticated] = useState<User | null>(null);
   const router = useRouter();
   const logout = async () => {
-    // Hapus cookie access_token
-    const response = apiCall.post("/logout");
-    document.cookie =
-      "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-    toast.success("Logout Successfully!");
-
-    // Redirect ke halaman login
-    router.push("/");
-    return response;
+    try {
+      await apiCall.post("/logout");
+      document.cookie =
+        "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      toast.success("Logout Successfully!");
+      router.push("/");
+    } catch (error) {
+      toast.error("Logout failed");
+    }
   };
 
   useEffect(() => {
