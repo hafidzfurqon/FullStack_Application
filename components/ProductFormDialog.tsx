@@ -85,7 +85,7 @@ export default function ProductFormDialog({
     formData.append("image", selectedImage);
 
     onSubmit(formData);
-    reset();
+    // reset();
     setSelectedImage(null);
     setImagePreview(null);
   };
@@ -173,7 +173,7 @@ export default function ProductFormDialog({
         </div>
 
         <DialogFooter>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending} className="cursor-pointer">
             {isPending ? "Submitting..." : "Submit Data"}
           </Button>
         </DialogFooter>

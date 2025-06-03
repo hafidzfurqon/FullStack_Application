@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useFetchDetailProduct } from "@/hooks/product/useFetchDetalProduct";
+import Image from "next/image";
 // import { Badge } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -21,14 +22,11 @@ const ProductDetailPage = () => {
     return <div>Product Is Not Available</div>;
   }
 
-  console.log(product);
-
-  console.log(id);
   return (
     <div className="max-w-6xl mx-auto p-8">
       <Card className="flex flex-col md:flex-row gap-6">
         <div className="flex-1">
-          <img
+          <Image
             src={product?.image}
             alt={product?.name}
             width={500}
@@ -46,7 +44,7 @@ const ProductDetailPage = () => {
           <p className="max-w-md overflow-auto break-words">
             {product.description}
           </p>
-          <Link href={"/"}>
+          <Link href={"/dashboard/products"}>
             <Button className="cursor-pointer">Kembali</Button>
           </Link>
         </CardContent>

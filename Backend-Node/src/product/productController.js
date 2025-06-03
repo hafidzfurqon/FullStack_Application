@@ -10,6 +10,7 @@ const {
   EditProduct,
   EditedProductById,
 } = require("./productService");
+const { handlePayment } = require("./midtransController");
 const router = express.Router();
 
 router.get("/:id", async (req, res) => {
@@ -128,5 +129,7 @@ router.patch("/:id", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
+router.post("/pay", handlePayment);
 
 module.exports = router;

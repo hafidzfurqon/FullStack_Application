@@ -1,5 +1,6 @@
 node_modules
 # Keep environment variables out of version control
 .env
+.vscode
 src/product/uploads/
 !src/product/uploads/1745986620397-images.jpeg

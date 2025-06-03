@@ -14,8 +14,9 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useMutationUpdateProduct } from "@/hooks/product";
 import { useQueryClient } from "@tanstack/react-query";
-import { Product } from "@/app/page";
+// import { Product } from "@/app/page";
 import { Textarea } from "./ui/textarea";
+import { ProductData } from "./ProductPage";
 
 export const EditProductDialog = ({
   open,
@@ -24,7 +25,7 @@ export const EditProductDialog = ({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  product: Product;
+  product: ProductData;
 }) => {
   const queryClient = useQueryClient();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -139,7 +140,7 @@ export const EditProductDialog = ({
                   <p className="text-sm">Current Image:</p>
                   <img
                     src={product.image}
-                    className="w-full h-auto border rounded"
+                    className="w-full h-80 object-contain rounded"
                     alt="Current"
                   />
                 </>
@@ -148,7 +149,11 @@ export const EditProductDialog = ({
           </div>
 
           <DialogFooter className="mt-4">
-            <Button type="submit" disabled={isPending}>
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="cursor-pointer"
+            >
               {isPending ? "Submitting..." : "Update Product"}
             </Button>
           </DialogFooter>

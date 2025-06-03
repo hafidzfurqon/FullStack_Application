@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import {Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { TanstackProvider } from "@/components/providers/tanstack-provider";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
+import NextTopLoader from "nextjs-toploader";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable}`}>
+        <NextTopLoader />
         <TanstackProvider>
           <ThemeProvider
             attribute="class"
@@ -32,7 +34,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="px-8 py-12">{children}</div>
+            <div className="">{children}</div>
+            {/* <div className="px-8 py-12">{children}</div> */}
             <Toaster />
           </ThemeProvider>
         </TanstackProvider>

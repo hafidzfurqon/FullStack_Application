@@ -13,10 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model users {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  email     String   @unique(map: "email") @db.VarChar(255)
+  address   String?  @db.VarChar(255)
+  password  String?  @db.VarChar(255)
+  role      String   @default("user") 
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
+  Order     Order[]
+}
+
 model Product {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   price       Int
   description String
   image       String
+  Order       Order[]
+}
+
+enum OrderStatus {
+  pending
+  success
+  canceled
+  rejected
+}
+model Order {
+  id           Int         @id @default(autoincrement())
+  userId       Int
+  user         users       @relation(fields: [userId], references: [id])
+  productId    Int
+  product      Product     @relation(fields: [productId], references: [id])
+  quantity     Int
+  totalPrice   Int
+  platformFee  Int         @default(0)
+  grossTotal   Int         @default(0)
+  status       OrderStatus @default(pending)
+  createdAt    DateTime    @default(now())
 }
