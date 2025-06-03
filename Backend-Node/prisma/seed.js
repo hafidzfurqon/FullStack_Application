@@ -1,5 +1,10 @@
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
+require("dotenv").config();
+
+const prisma = new PrismaClient();
+
 async function main() {
-  // Cek dan buat admin jika belum ada
   const existingAdmin = await prisma.users.findUnique({
     where: { email: "admin@gmail.com" },
   });
@@ -20,7 +25,6 @@ async function main() {
     console.log("Admin already exists.");
   }
 
-  // Cek dan buat user jika belum ada
   const existingUser = await prisma.users.findUnique({
     where: { email: "user@gmail.com" },
   });
@@ -41,7 +45,6 @@ async function main() {
     console.log("User already exists.");
   }
 
-  // Cek dan buat product jika belum ada
   const existingProduct = await prisma.product.findFirst({
     where: { name: "Mechanical Keyboard" },
   });
@@ -62,3 +65,12 @@ async function main() {
 
   console.log("Seeder selesai dijalankan.");
 }
+
+main()
+  .catch((e) => {
+    console.error("Seeder error:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

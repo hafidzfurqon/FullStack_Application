@@ -173,10 +173,10 @@ export function CheckoutPage() {
                 status: "pending", // Explicitly set status to pending
               });
 
-              toast.warning("Payment is pending. Order has been recorded.");
-              router.push(
-                `/orders/pending?orderId=${orderData[0]?.id || "multiple"}`
+              toast.warning(
+                "Payment is pending. Order has been recorded as pending."
               );
+              router.push(`/products`);
             } catch (orderError) {
               console.error("Failed to create pending order:", orderError);
               toast.error("Payment pending but failed to save order.");

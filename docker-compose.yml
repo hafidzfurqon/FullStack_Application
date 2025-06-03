@@ -29,6 +29,7 @@ services:
       # In a real production environment, these values should be secured using .env files
       # (excluded from version control), secret managers, or deployment-specific env vars.
       DATABASE_URL: postgresql://fullstack_app:fullstack_app_password@postgres:5432/fullstack_db
+      BASE_URL: http://localhost:3001/uploads
       FRONTEND_URL: http://frontend_service:3000
       MIDTRANS_SERVER_KEY: SB-Mid-server-_8WTj0iDrj0Y4LTs5NCmPm8x
       JWT_SECRET: IMa8ewEWBnaocxXgknNaehpAkl59HORQ5gJZvJW9d3iPc79UFwOdDK7HelVzBSCu
