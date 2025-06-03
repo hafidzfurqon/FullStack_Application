@@ -51,3 +51,6 @@ Build and run the Next.js frontend on http://localhost:3000
 Start the Express backend on http://localhost:3001
 
 Run the PostgreSQL database inside a Docker container
+
+### NOTED
+Saya sengaja menyimpan environment variable secara langsung di docker-compose.yml agar memudahkan review dan pengujian pada saat demo. Namun, saya paham bahwa ini tidak ideal untuk produksi. Untuk production, saya akan memindahkan semua secrets ke .env yang tidak di-push ke repository, atau menggunakan secret management seperti Docker secrets, Kubernetes Secrets, atau env manager CI/CD.

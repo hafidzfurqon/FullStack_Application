@@ -6,9 +6,9 @@ services:
     container_name: postgre_database
     restart: always
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: fullstack_app
+      POSTGRES_PASSWORD: fullstack_app_password
+      POSTGRES_DB: fullstack_db
     ports:
       - "5432:5432"
     volumes:
@@ -23,9 +23,15 @@ services:
     ports:
       - "3001:3001"
     environment:
-      PORT: 3001
-      DATABASE_URL: postgres://myuser:mypassword@postgres:5432/mydatabase
-      BASE_URL: http://localhost:3001/uploads
+      # NOTE:
+      # These environment variables (e.g. JWT_SECRET, MIDTRANS_SERVER_KEY) are exposed here
+      # only for development/demo purposes as part of this technical test.
+      # In a real production environment, these values should be secured using .env files
+      # (excluded from version control), secret managers, or deployment-specific env vars.
+      DATABASE_URL: postgres://fullstack_app:fullstack_app_password@postgres:5432/fullstack_db
+      FRONTEND_URL: http://frontend:3000
+      MIDTRANS_SERVER_KEY: SB-Mid-server-_8WTj0iDrj0Y4LTs5NCmPm8x
+      JWT_SECRET: IMa8ewEWBnaocxXgknNaehpAkl59HORQ5gJZvJW9d3iPc79UFwOdDK7HelVzBSCu
     depends_on:
       - postgres
     volumes:
