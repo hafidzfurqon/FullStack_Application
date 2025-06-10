@@ -142,13 +142,10 @@ export function CheckoutPage() {
               // Create order record with SUCCESS status
               const orderData = await createOrderRecord(data.token, {
                 ...result,
-                status: "success", // Explicitly set status to success
+                status: "success", 
               });
 
               toast.success("Payment successful! Order created.");
-
-              // Clear cart/products after successful payment
-              // clearCart(); // Uncomment if you have cart clearing function
 
               // Redirect to order success page
               router.push(

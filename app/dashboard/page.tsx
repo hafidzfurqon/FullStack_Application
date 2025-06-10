@@ -32,7 +32,7 @@ interface LayoutCard {
   className: any;
 }
 
-// Mock API functions - replace with your actual API calls
+
 const api = {
   getDashboardStats: async () => {
     const response = await apiCall.get("/orders/dashboard/stats");
@@ -56,7 +56,7 @@ const api = {
   },
 };
 
-// Card components
+
 function Card({ children, className = "" }: LayoutCard) {
   return (
     <div className={`bg-white dark:bg-gray-800 rounded-lg ${className}`}>

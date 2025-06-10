@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await apiCall.get("/me"); // Adjust endpoint as needed
+        const userData = await apiCall.get("/me"); 
         setUserAuthenticated(userData.data || userData);
       } catch (error) {
         console.error("Failed to fetch user data:", error);

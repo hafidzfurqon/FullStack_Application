@@ -123,7 +123,7 @@ const getOrderDetail = async (req, res) => {
       });
     }
 
-    // Cegah akses jika order bukan milik user yang sedang login
+    
     if (order.userId !== userId) {
       return res.status(403).json({
         success: false,
